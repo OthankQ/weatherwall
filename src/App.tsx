@@ -25,7 +25,7 @@ function App() {
 
   return (
     <div className="App">
-      <input type="text" onChange={handleInputChange} />
+      <input type="text" onChange={handleInputChange} value={cityName} />
       <button onClick={handleSearchClick}>Search</button>
     </div>
   );

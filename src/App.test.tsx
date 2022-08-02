@@ -2,8 +2,14 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test.skip('renders learn react link', () => {
+test('renders text input', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const textInput = screen.getByRole('textbox');
+  expect(textInput).toBeInTheDocument();
+});
+
+test('renders button', () => {
+  render(<App />);
+  const searchButton = screen.getByRole('button');
+  expect(searchButton).toBeInTheDocument();
 });
