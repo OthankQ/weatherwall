@@ -23,9 +23,21 @@ function App() {
     });
   };
 
+  const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (e.key === 'Enter') {
+      handleSearchClick(e as unknown as React.MouseEvent<HTMLButtonElement>);
+      e.target.value = '';
+    }
+  };
+
   return (
     <div className="App">
-      <input type="text" onChange={handleInputChange} value={cityName} />
+      <input
+        type="text"
+        onChange={handleInputChange}
+        value={cityName}
+        onKeyDown={handleEnter}
+      />
       <button onClick={handleSearchClick}>Search</button>
     </div>
   );
