@@ -15,6 +15,9 @@ export type WeatherContextType = {
   temp: number;
   minTemp: number;
   maxTemp: number;
+  handleInputChange: (e: React.FormEvent<HTMLInputElement>) => void;
+  handleEnter: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  handleSearchClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 export const WeatherContext = createContext({} as WeatherContextType);
@@ -75,6 +78,9 @@ function App() {
         temp,
         minTemp,
         maxTemp,
+        handleInputChange,
+        handleEnter,
+        handleSearchClick,
       }}
     >
       <div
@@ -87,12 +93,7 @@ function App() {
         }}
         className="container"
       >
-        <Searchbar
-          handleInputChange={handleInputChange}
-          handleSearchClick={handleSearchClick}
-          cityName={cityName}
-          handleEnter={handleEnter}
-        />
+        <Searchbar />
 
         <Display />
       </div>

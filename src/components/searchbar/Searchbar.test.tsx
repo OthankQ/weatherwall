@@ -1,4 +1,5 @@
 import Searchbar from './Searchbar';
+import { WeatherContext, WeatherContextType } from '../../App';
 
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -13,7 +14,11 @@ describe('Searchbar', () => {
   };
 
   test('renders Searchbar component', () => {
-    render(<Searchbar {...mockProps} />);
+    render(
+      <WeatherContext.Provider value={{} as WeatherContextType}>
+        <Searchbar />
+      </WeatherContext.Provider>
+    );
     const input = screen.getByRole('textbox');
     const button = screen.getByRole('button');
 
@@ -22,7 +27,18 @@ describe('Searchbar', () => {
   });
 
   test('handleInputChange is called right amount of times', () => {
-    render(<Searchbar {...mockProps} />);
+    render(
+      <WeatherContext.Provider
+        value={
+          {
+            handleInputChange: mockProps.handleInputChange,
+          } as unknown as WeatherContextType
+        }
+      >
+        <Searchbar />
+      </WeatherContext.Provider>
+    );
+
     const input = screen.getByRole('textbox');
 
     userEvent.type(input, 'test');
@@ -31,7 +47,17 @@ describe('Searchbar', () => {
   });
 
   test('handleSearchClick is called when button is pressed', () => {
-    render(<Searchbar {...mockProps} />);
+    render(
+      <WeatherContext.Provider
+        value={
+          {
+            handleSearchClick: mockProps.handleSearchClick,
+          } as unknown as WeatherContextType
+        }
+      >
+        <Searchbar />
+      </WeatherContext.Provider>
+    );
     const button = screen.getByRole('button');
 
     userEvent.click(button);
@@ -40,7 +66,17 @@ describe('Searchbar', () => {
   });
 
   test('handleSearchClick is called when enter is pressed', () => {
-    render(<Searchbar {...mockProps} />);
+    render(
+      <WeatherContext.Provider
+        value={
+          {
+            handleEnter: mockProps.handleEnter,
+          } as unknown as WeatherContextType
+        }
+      >
+        <Searchbar />
+      </WeatherContext.Provider>
+    );
     const input = screen.getByRole('textbox');
 
     fireEvent.keyDown(input, { key: 'Enter', code: 'Enter', charCode: 13 });

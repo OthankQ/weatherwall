@@ -1,23 +1,20 @@
-type SearchbarProps = {
-  handleInputChange: (e: React.FormEvent<HTMLInputElement>) => void;
-  handleSearchClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  handleEnter: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-  cityName: string;
-};
+import { useContext } from 'react';
+import { WeatherContextType } from '../../App';
+import { WeatherContext } from '../../App';
 
-const Searchbar = (props: SearchbarProps) => {
-  const { handleInputChange, handleSearchClick, handleEnter, cityName } = props;
+const Searchbar = () => {
+  const data: WeatherContextType = useContext(WeatherContext);
 
   return (
     <div className="App">
       <input
         type="text"
-        onChange={handleInputChange}
-        value={cityName}
-        onKeyDown={handleEnter}
+        onChange={data.handleInputChange}
+        value={data.cityName}
+        onKeyDown={data.handleEnter}
       />
 
-      <button onClick={handleSearchClick}>Search</button>
+      <button onClick={data.handleSearchClick}>Search</button>
     </div>
   );
 };
