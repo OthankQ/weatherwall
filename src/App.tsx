@@ -1,11 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, createContext } from 'react';
 
-import Searchbar from './components/Searchbar';
+import Searchbar from './components/searchbar/Searchbar';
+import Display from './components/display/Display';
 
 import { getCurrentWeatherByCoord } from './services/WeatherService';
 import { getCoordByCityName } from './services/LocationService';
 
 import './App.css';
+
+export type WeatherContextType = {
+  cityName: string;
+  completeCityName: string;
+  clouds: number;
+  temp: number;
+  minTemp: number;
+  maxTemp: number;
+};
+
+export const WeatherContext = createContext({} as WeatherContextType);
 
 function App() {
   const [cityName, setCityName] = useState('');
@@ -17,6 +29,10 @@ function App() {
 
   const convertKelvintoCelsius = (kelvin: number): number => {
     return Math.round(kelvin - 273.15);
+  };
+
+  const convertKelvintoFahrenheit = (kelvin: number): number => {
+    return Math.round((kelvin - 273.15) * (9 / 5) + 32);
   };
 
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>): void => {
@@ -51,29 +67,36 @@ function App() {
   };
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        flexDirection: 'column',
+    <WeatherContext.Provider
+      value={{
+        cityName,
+        completeCityName,
+        clouds,
+        temp,
+        minTemp,
+        maxTemp,
       }}
-      className="container"
     >
-      <Searchbar
-        handleInputChange={handleInputChange}
-        handleSearchClick={handleSearchClick}
-        cityName={cityName}
-        handleEnter={handleEnter}
-      />
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+          flexDirection: 'column',
+        }}
+        className="container"
+      >
+        <Searchbar
+          handleInputChange={handleInputChange}
+          handleSearchClick={handleSearchClick}
+          cityName={cityName}
+          handleEnter={handleEnter}
+        />
 
-      <h1>City: {completeCityName}</h1>
-      <h2>Clouds: {clouds}</h2>
-      <h2>Avg Temp: {temp}</h2>
-      <h2>Min Temp: {minTemp}</h2>
-      <h2>Max Temp: {maxTemp}</h2>
-    </div>
+        <Display />
+      </div>
+    </WeatherContext.Provider>
   );
 }
 
