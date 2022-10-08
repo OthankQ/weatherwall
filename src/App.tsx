@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import Searchbar from './components/Searchbar';
+
 import { getCurrentWeatherByCoord } from './services/WeatherService';
 import { getCoordByCityName } from './services/LocationService';
 
@@ -55,25 +57,22 @@ function App() {
         justifyContent: 'center',
         alignItems: 'center',
         height: '100vh',
+        flexDirection: 'column',
       }}
       className="container"
     >
-      <div className="App">
-        <input
-          type="text"
-          onChange={handleInputChange}
-          value={cityName}
-          onKeyDown={handleEnter}
-        />
+      <Searchbar
+        handleInputChange={handleInputChange}
+        handleSearchClick={handleSearchClick}
+        cityName={cityName}
+        handleEnter={handleEnter}
+      />
 
-        <button onClick={handleSearchClick}>Search</button>
-
-        <h1>City: {completeCityName}</h1>
-        <h2>Clouds: {clouds}</h2>
-        <h2>Avg Temp: {temp}</h2>
-        <h2>Min Temp: {minTemp}</h2>
-        <h2>Max Temp: {maxTemp}</h2>
-      </div>
+      <h1>City: {completeCityName}</h1>
+      <h2>Clouds: {clouds}</h2>
+      <h2>Avg Temp: {temp}</h2>
+      <h2>Min Temp: {minTemp}</h2>
+      <h2>Max Temp: {maxTemp}</h2>
     </div>
   );
 }
