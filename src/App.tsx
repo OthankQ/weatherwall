@@ -21,22 +21,24 @@ function App() {
     setCityName(e.currentTarget.value);
   };
 
-  const handleSearchClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
+  const handleSearchClick = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ): Promise<void> => {
     e.preventDefault();
 
-    getCoordByCityName(cityName).then((res) => {
-      const lat = res[0].lat;
-      const lon = res[0].lon;
+    const coord = await getCoordByCityName(cityName);
+    const lat = coord[0].lat;
+    const lon = coord[0].lon;
 
-      getCurrentWeatherByCoord(lat, lon).then((res) => {
-        console.log(res);
-        setCompleteCityName(res.name);
-        setClouds(res.clouds.all);
-        setTemp(convertKelvintoCelsius(res.main.temp));
-        setMinTemp(convertKelvintoCelsius(res.main.temp_min));
-        setMaxTemp(convertKelvintoCelsius(res.main.temp_max));
-      });
-    });
+    const data = await getCurrentWeatherByCoord(lat, lon);
+
+    console.log(data);
+
+    setCompleteCityName(data.name);
+    setClouds(data.clouds.all);
+    setTemp(convertKelvintoCelsius(data.main.temp));
+    setMinTemp(convertKelvintoCelsius(data.main.temp_min));
+    setMaxTemp(convertKelvintoCelsius(data.main.temp_max));
   };
 
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>): void => {
