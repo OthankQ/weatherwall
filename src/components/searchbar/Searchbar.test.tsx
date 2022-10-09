@@ -1,9 +1,9 @@
-import Searchbar from './Searchbar';
-import { WeatherContext, WeatherContextType } from '../../App';
-
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
+
+import Searchbar from './Searchbar';
+import { WeatherContext, WeatherContextType } from '../../App';
 
 describe('Searchbar', () => {
   const mockProps = {

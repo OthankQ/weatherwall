@@ -22,7 +22,7 @@ export type WeatherContextType = {
 
 export const WeatherContext = createContext({} as WeatherContextType);
 
-function App() {
+const App = () => {
   const [cityName, setCityName] = useState('');
   const [completeCityName, setCompleteCityName] = useState('');
   const [clouds, setClouds] = useState(0);
@@ -36,6 +36,18 @@ function App() {
 
   const convertKelvintoFahrenheit = (kelvin: number): number => {
     return Math.round((kelvin - 273.15) * (9 / 5) + 32);
+  };
+
+  const handleUnitChange = (unit: string) => {
+    if (unit === 'celsius') {
+      setTemp(convertKelvintoCelsius(temp));
+      setMinTemp(convertKelvintoCelsius(minTemp));
+      setMaxTemp(convertKelvintoCelsius(maxTemp));
+    } else {
+      setTemp(convertKelvintoFahrenheit(temp));
+      setMinTemp(convertKelvintoFahrenheit(minTemp));
+      setMaxTemp(convertKelvintoFahrenheit(maxTemp));
+    }
   };
 
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>): void => {
@@ -99,6 +111,6 @@ function App() {
       </div>
     </WeatherContext.Provider>
   );
-}
+};
 
 export default App;
