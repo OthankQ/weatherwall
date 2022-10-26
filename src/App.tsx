@@ -1,4 +1,5 @@
 import React, { useState, createContext } from 'react';
+import { Center, ChakraProvider, VStack } from '@chakra-ui/react';
 
 import Searchbar from './components/searchbar/Searchbar';
 import Display from './components/display/Display';
@@ -82,34 +83,29 @@ const App = () => {
   };
 
   return (
-    <WeatherContext.Provider
-      value={{
-        cityName,
-        completeCityName,
-        clouds,
-        temp,
-        minTemp,
-        maxTemp,
-        handleInputChange,
-        handleEnter,
-        handleSearchClick,
-      }}
-    >
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100vh',
-          flexDirection: 'column',
+    <ChakraProvider>
+      <WeatherContext.Provider
+        value={{
+          cityName,
+          completeCityName,
+          clouds,
+          temp,
+          minTemp,
+          maxTemp,
+          handleInputChange,
+          handleEnter,
+          handleSearchClick,
         }}
-        className="container"
       >
-        <Searchbar />
+        <Center h="100vh" w="100vw">
+          <VStack spacing={4}>
+            <Searchbar />
 
-        <Display />
-      </div>
-    </WeatherContext.Provider>
+            <Display />
+          </VStack>
+        </Center>
+      </WeatherContext.Provider>
+    </ChakraProvider>
   );
 };
 
